@@ -5,131 +5,150 @@ import sys
 import time
 from typing import List, Dict, Tuple
 
-#this is done
-abilities: List[str] = ["ANTICIPATION", "ASPHYXIATE", "ASSAULT", "BACKHAND", "BARGE", "BASH",
-                        "BERSERK", "BINDING SHOT", "BLOOD TENDRILS", "BOMBARDMENT", "CHAIN", "CLEAVE", "COMBUST",
-                        "CONCENTRATED BLAST", "CORRUPTION BLAST", "CORRUPTION SHOT", "DAZING SHOT", "DEADSHOT",
-                        "DEATH'S SWIFTNESS", "DEBILITATE", "DECIMATE", "DEEP IMPACT", "DEMORALISE", "DESTROY",
-                        "DEVOTION", "DISMEMBER", "DRAGON BREATH", "ESCAPE", "FLURRY", "FORCEFUL BACKHAND",
-                        "FRAGMENTATION SHOT", "FREEDOM", "FRENZY", "FURY", "GOLDEN TOUCH", "HAVOC", "HORROR", "HURRICANE",
-                        "IMPACT", "INCENDIARY SHOT", "KICK", "MASSACRE", "METAMORPHOSIS", "METEOR STRIKE", "NEEDLE STRIKE",
-                        "OMNIPOWER", "OVERPOWER", "PIERCING SHOT", "PULVERISE", "PUNISH", "QUAKE", "RAPID FIRE", "RICOCHET",
-                        "ROUT", "SACRIFICE", "SALT THE WOUND", "SEVER", "SHADOW TENDRILS", "SHOCK", "SLAUGHTER", "SLICE",
-                        "SMASH", "SMOKE TENDRILS", "SNAP SHOT", "SNIPE", "SONIC WAVE", "STOMP", "SUNSHINE",
-                        "SURGE", "TIGHT BINDINGS", "TSUNAMI","TUSKA'S WRATH", "UNLOAD", "WILD MAGIC", "WRACK"]
+abilities = ["ANTICIPATION", "ASPHYXIATE", "ASSAULT", "BACKHAND", "BARGE", "BASH", "BERSERK", "BINDING SHOT",
+             "BLOOD TENDRILS", "BOMBARDMENT", "CHAIN", "CLEAVE", "COMBUST", "CONCENTRATED BLAST", "CORRUPTION BLAST",
+             "CORRUPTION SHOT", "DAZING SHOT", "DEADSHOT", "DEATH'S SWIFTNESS", "DEBILITATE", "DECIMATE", "DEEP IMPACT",
+             "DEMORALISE", "DESTROY", "DEVOTION", "DISMEMBER", "DRAGON BREATH", "ESCAPE", "FLURRY", "FORCEFUL BACKHAND",
+             "FRAGMENTATION SHOT", "FREEDOM", "FRENZY", "FURY", "GOLDEN TOUCH", "HAVOC", "HORROR", "HURRICANE",
+             "IMPACT", "INCENDIARY SHOT", "KICK", "MASSACRE", "METAMORPHOSIS", "METEOR STRIKE", "NEEDLE STRIKE",
+             "OMNIPOWER", "OVERPOWER", "PIERCING SHOT", "PULVERISE", "PUNISH", "QUAKE", "RAPID FIRE", "RICOCHET",
+             "ROUT", "SACRIFICE", "SALT THE WOUND", "SEVER", "SHADOW TENDRILS", "SHOCK", "SLAUGHTER", "SLICE", "SMASH",
+             "SMOKE TENDRILS", "SNAP SHOT", "SNIPE", "SONIC WAVE", "STOMP", "SUNSHINE", "SURGE", "TIGHT BINDINGS",
+             "TSUNAMI", "TUSKA'S WRATH", "UNLOAD", "WILD MAGIC", "WRACK"]
 
 # --- Defining how abilities work --- #
 
 # Define cooldowns for cases where no abilities may be used --done
-attack_speed_cooldowns: Dict[str, float] = {"FASTEST": 2.4, "FAST": 3.0, "AVERAGE": 3.6, "SLOW": 4.2, "SLOWEST": 7.2}
+attack_speed_cooldowns = {"FASTEST": 2.4, "FAST": 3.0, "AVERAGE": 3.6, "SLOW": 4.2, "SLOWEST": 7.2}
 
 # Define ability damage for every ability
-ability_damage: Dict[str, float] = {"ANTICIPATION": 0, "ASPHYXIATE": 451.2, "ASSAULT": 525.6, "BACKHAND": 60, "BARGE": 75, "BASH": 60,
-                        "BERSERK": 0, "BINDING SHOT": 60, "BLOOD TENDRILS": 324, "BOMBARDMENT": 131.4, "CHAIN": 60, "CLEAVE": 112.8, "COMBUST": 144,
-                        "CONCENTRATED BLAST": 147.6, "CORRUPTION BLAST": 200, "CORRUPTION SHOT": 200, "DAZING SHOT": 94.2, "DEADSHOT": 425.8,
-                        "DEATH'S SWIFTNESS": 240, "DEBILITATE": 60, "DECIMATE": 112.8, "DEEP IMPACT": 120, "DEMORALISE": 60, "DESTROY": 451.2,
-                        "DEVOTION": 0, "DISMEMBER": 144, "DRAGON BREATH": 112.8, "ESCAPE": 0, "FLURRY": 228, "FORCEFUL BACKHAND": 120,
-                        "FRAGMENTATION SHOT": 144, "FREEDOM": 0, "FRENZY": 610, "FURY": 147.6, "GOLDEN TOUCH": 0, "HAVOC": 94.2, "HORROR": 120, "HURRICANE": 265,
-                        "IMPACT": 60, "INCENDIARY SHOT": 300, "KICK": 60, "MASSACRE": 425.8, "METAMORPHOSIS": 0, "METEOR STRIKE": 300, "NEEDLE STRIKE": 94.2,
-                        "OMNIPOWER": 300, "OVERPOWER": 300, "PIERCING SHOT": 56.4, "PULVERISE": 300, "PUNISH": 56.4, "QUAKE": 131.4, "RAPID FIRE": 451.2, "RICOCHET": 60,
-                        "ROUT": 120, "SACRIFICE": 60, "SALT THE WOUND": 112.8, "SEVER": 112.8, "SHADOW TENDRILS": 66.5, "SHOCK": 60, "SLAUGHTER": 175, "SLICE": 75,
-                        "SMASH": 94.2, "SMOKE TENDRILS": 345, "SNAP SHOT": 265, "SNIPE": 172, "SONIC WAVE": 94.2, "STOMP": 120, "SUNSHINE": 240,
-                        "SURGE": 0, "TIGHT BINDINGS": 120, "TSUNAMI": 250,"TUSKA'S WRATH": 70, "UNLOAD": 610, "WILD MAGIC": 265, "WRACK": 56.4}
+ability_damage = {"ANTICIPATION": 0, "ASPHYXIATE": 451.2, "ASSAULT": 525.6, "BACKHAND": 60, "BARGE": 75, "BASH": 60,
+                  "BERSERK": 0, "BINDING SHOT": 60, "BLOOD TENDRILS": 324, "BOMBARDMENT": 131.4, "CHAIN": 60,
+                  "CLEAVE": 112.8, "COMBUST": 144, "CONCENTRATED BLAST": 147.6, "CORRUPTION BLAST": 200,
+                  "CORRUPTION SHOT": 200, "DAZING SHOT": 94.2, "DEADSHOT": 425.8, "DEATH'S SWIFTNESS": 240,
+                  "DEBILITATE": 60, "DECIMATE": 112.8, "DEEP IMPACT": 120, "DEMORALISE": 60, "DESTROY": 451.2,
+                  "DEVOTION": 0, "DISMEMBER": 144, "DRAGON BREATH": 112.8, "ESCAPE": 0, "FLURRY": 228,
+                  "FORCEFUL BACKHAND": 120, "FRAGMENTATION SHOT": 144, "FREEDOM": 0, "FRENZY": 610, "FURY": 147.6,
+                  "GOLDEN TOUCH": 0, "HAVOC": 94.2, "HORROR": 120, "HURRICANE": 265, "IMPACT": 60,
+                  "INCENDIARY SHOT": 300, "KICK": 60, "MASSACRE": 425.8, "METAMORPHOSIS": 0, "METEOR STRIKE": 300,
+                  "NEEDLE STRIKE": 94.2, "OMNIPOWER": 300, "OVERPOWER": 300, "PIERCING SHOT": 56.4, "PULVERISE": 300,
+                  "PUNISH": 56.4, "QUAKE": 131.4, "RAPID FIRE": 451.2, "RICOCHET": 60, "ROUT": 120, "SACRIFICE": 60,
+                  "SALT THE WOUND": 112.8, "SEVER": 112.8, "SHADOW TENDRILS": 66.5, "SHOCK": 60, "SLAUGHTER": 175,
+                  "SLICE": 75, "SMASH": 94.2, "SMOKE TENDRILS": 345, "SNAP SHOT": 265, "SNIPE": 172, "SONIC WAVE": 94.2,
+                  "STOMP": 120, "SUNSHINE": 240, "SURGE": 0, "TIGHT BINDINGS": 120, "TSUNAMI": 250, "TUSKA'S WRATH": 70,
+                  "UNLOAD": 610, "WILD MAGIC": 265, "WRACK": 56.4}
 
 # Define the cooldown of abilities (in seconds)
-ability_cooldown: Dict[str, float] = {"ANTICIPATION": 40, "ASPHYXIATE": 34, "ASSAULT": 50, "BACKHAND": 25, "BARGE": 34, "BASH": 25,
-                        "BERSERK": 100, "BINDING SHOT": 25, "BLOOD TENDRILS": 75, "BOMBARDMENT": 50, "CHAIN": 17, "CLEAVE": 12, "COMBUST": 25,
-                        "CONCENTRATED BLAST": 9, "CORRUPTION BLAST": 25, "CORRUPTION SHOT": 25, "DAZING SHOT": 9, "DEADSHOT": 50,
-                        "DEATH'S SWIFTNESS": 100, "DEBILITATE": 50, "DECIMATE": 12, "DEEP IMPACT": 25, "DEMORALISE": 25, "DESTROY": 34,
-                        "DEVOTION": 100, "DISMEMBER": 25, "DRAGON BREATH": 17, "ESCAPE": 34, "FLURRY": 34, "FORCEFUL BACKHAND": 25,
-                        "FRAGMENTATION SHOT": 25, "FREEDOM": 50, "FRENZY": 100, "FURY": 9, "GOLDEN TOUCH": 200, "HAVOC": 17, "HORROR": 25, "HURRICANE": 34,
-                        "IMPACT": 25, "INCENDIARY SHOT": 100, "KICK": 25, "MASSACRE": 100, "METAMORPHOSIS": 100, "METEOR STRIKE": 100, "NEEDLE STRIKE": 9,
-                        "OMNIPOWER": 50, "OVERPOWER": 50, "PIERCING SHOT": 5, "PULVERISE": 100, "PUNISH": 5, "QUAKE": 34, "RAPID FIRE": 34, "RICOCHET": 17,
-                        "ROUT": 25, "SACRIFICE": 50, "SALT THE WOUND": 25, "SEVER": 25, "SHADOW TENDRILS": 75, "SHOCK": 25, "SLAUGHTER": 50, "SLICE": 5,
-                        "SMASH": 17, "SMOKE TENDRILS": 75, "SNAP SHOT": 34, "SNIPE": 17, "SONIC WAVE": 9, "STOMP": 25, "SUNSHINE": 100,
-                        "SURGE": 34, "TIGHT BINDINGS": 25, "TSUNAMI": 100,"TUSKA'S WRATH": 25, "UNLOAD": 100, "WILD MAGIC": 34, "WRACK": 5}
+ability_cooldown = {"ANTICIPATION": 40, "ASPHYXIATE": 34, "ASSAULT": 50, "BACKHAND": 25, "BARGE": 34, "BASH": 25,
+                    "BERSERK": 100, "BINDING SHOT": 25, "BLOOD TENDRILS": 75, "BOMBARDMENT": 50, "CHAIN": 17,
+                    "CLEAVE": 12, "COMBUST": 25, "CONCENTRATED BLAST": 9, "CORRUPTION BLAST": 25, "CORRUPTION SHOT": 25,
+                    "DAZING SHOT": 9, "DEADSHOT": 50, "DEATH'S SWIFTNESS": 100, "DEBILITATE": 50, "DECIMATE": 12,
+                    "DEEP IMPACT": 25, "DEMORALISE": 25, "DESTROY": 34, "DEVOTION": 100, "DISMEMBER": 25,
+                    "DRAGON BREATH": 17, "ESCAPE": 34, "FLURRY": 34, "FORCEFUL BACKHAND": 25, "FRAGMENTATION SHOT": 25,
+                    "FREEDOM": 50, "FRENZY": 100, "FURY": 9, "GOLDEN TOUCH": 200, "HAVOC": 17, "HORROR": 25,
+                    "HURRICANE": 34, "IMPACT": 25, "INCENDIARY SHOT": 100, "KICK": 25, "MASSACRE": 100,
+                    "METAMORPHOSIS": 100, "METEOR STRIKE": 100, "NEEDLE STRIKE": 9, "OMNIPOWER": 50, "OVERPOWER": 50,
+                    "PIERCING SHOT": 5, "PULVERISE": 100, "PUNISH": 5, "QUAKE": 34, "RAPID FIRE": 34, "RICOCHET": 17,
+                    "ROUT": 25, "SACRIFICE": 50, "SALT THE WOUND": 25, "SEVER": 25, "SHADOW TENDRILS": 75, "SHOCK": 25,
+                    "SLAUGHTER": 50, "SLICE": 5, "SMASH": 17, "SMOKE TENDRILS": 75, "SNAP SHOT": 34, "SNIPE": 17,
+                    "SONIC WAVE": 9, "STOMP": 25, "SUNSHINE": 100, "SURGE": 34, "TIGHT BINDINGS": 25, "TSUNAMI": 100,
+                    "TUSKA'S WRATH": 25, "UNLOAD": 100, "WILD MAGIC": 34, "WRACK": 5}
 
 # How long it takes to use each ability -- 1.8 (3ticks) is minimum
-ability_time: Dict[str, float] = {"ANTICIPATION": 1.8, "ASPHYXIATE": 5.4, "ASSAULT": 5.4, "BACKHAND": 1.8, "BARGE": 1.8, "BASH": 1.8,
-                        "BERSERK": 1.8, "BINDING SHOT": 1.8, "BLOOD TENDRILS": 1.8, "BOMBARDMENT": 1.8, "CHAIN": 1.8, "CLEAVE": 1.8, "COMBUST": 1.8,
-                        "CONCENTRATED BLAST": 3.6, "CORRUPTION BLAST": 1.8, "CORRUPTION SHOT": 1.8, "DAZING SHOT": 1.8, "DEADSHOT": 1.8,
-                        "DEATH'S SWIFTNESS": 1.8, "DEBILITATE": 1.8, "DECIMATE": 1.8, "DEEP IMPACT": 1.8, "DEMORALISE": 1.8, "DESTROY": 5.4,
-                        "DEVOTION": 1.8, "DISMEMBER": 1.8, "DRAGON BREATH": 1.8, "ESCAPE": 1.8, "FLURRY": 5.4, "FORCEFUL BACKHAND": 1.8,
-                        "FRAGMENTATION SHOT": 1.8, "FREEDOM": 1.8, "FRENZY": 5.4, "FURY": 3, "GOLDEN TOUCH": 1.8, "HAVOC": 1.8, "HORROR": 1.8, "HURRICANE": 1.8,
-                        "IMPACT": 1.8, "INCENDIARY SHOT": 1.8, "KICK": 1.8, "MASSACRE": 1.8, "METAMORPHOSIS": 1.8, "METEOR STRIKE": 1.8, "NEEDLE STRIKE": 1.8,
-                        "OMNIPOWER": 1.8, "OVERPOWER": 1.8, "PIERCING SHOT": 1.8, "PULVERISE": 1.8, "PUNISH": 1.8, "QUAKE": 1.8, "RAPID FIRE": 6, "RICOCHET": 1.8,
-                        "ROUT": 1.8, "SACRIFICE": 1.8, "SALT THE WOUND": 1.8, "SEVER": 1.8, "SHADOW TENDRILS": 1.8, "SHOCK": 1.8, "SLAUGHTER": 1.8, "SLICE": 1.8,
-                        "SMASH": 1.8, "SMOKE TENDRILS": 5.4, "SNAP SHOT": 1.8, "SNIPE": 4.2, "SONIC WAVE": 1.8, "STOMP": 1.8, "SUNSHINE": 1.8,
-                        "SURGE": 1.8, "TIGHT BINDINGS": 1.8, "TSUNAMI": 1.8,"TUSKA'S WRATH": 1.8, "UNLOAD": 5.4, "WILD MAGIC": 1.8, "WRACK": 1.8}
+ability_time = {"ANTICIPATION": 1.8, "ASPHYXIATE": 5.4, "ASSAULT": 5.4, "BACKHAND": 1.8, "BARGE": 1.8, "BASH": 1.8,
+                "BERSERK": 1.8, "BINDING SHOT": 1.8, "BLOOD TENDRILS": 1.8, "BOMBARDMENT": 1.8, "CHAIN": 1.8,
+                "CLEAVE": 1.8, "COMBUST": 1.8, "CONCENTRATED BLAST": 3.6, "CORRUPTION BLAST": 1.8,
+                "CORRUPTION SHOT": 1.8, "DAZING SHOT": 1.8, "DEADSHOT": 1.8, "DEATH'S SWIFTNESS": 1.8,
+                "DEBILITATE": 1.8, "DECIMATE": 1.8, "DEEP IMPACT": 1.8, "DEMORALISE": 1.8, "DESTROY": 5.4,
+                "DEVOTION": 1.8, "DISMEMBER": 1.8, "DRAGON BREATH": 1.8, "ESCAPE": 1.8, "FLURRY": 5.4,
+                "FORCEFUL BACKHAND": 1.8, "FRAGMENTATION SHOT": 1.8, "FREEDOM": 1.8, "FRENZY": 5.4, "FURY": 3,
+                "GOLDEN TOUCH": 1.8, "HAVOC": 1.8, "HORROR": 1.8, "HURRICANE": 1.8, "IMPACT": 1.8,
+                "INCENDIARY SHOT": 1.8, "KICK": 1.8, "MASSACRE": 1.8, "METAMORPHOSIS": 1.8, "METEOR STRIKE": 1.8,
+                "NEEDLE STRIKE": 1.8, "OMNIPOWER": 1.8, "OVERPOWER": 1.8, "PIERCING SHOT": 1.8, "PULVERISE": 1.8,
+                "PUNISH": 1.8, "QUAKE": 1.8, "RAPID FIRE": 6, "RICOCHET": 1.8, "ROUT": 1.8, "SACRIFICE": 1.8,
+                "SALT THE WOUND": 1.8, "SEVER": 1.8, "SHADOW TENDRILS": 1.8, "SHOCK": 1.8, "SLAUGHTER": 1.8,
+                "SLICE": 1.8, "SMASH": 1.8, "SMOKE TENDRILS": 5.4, "SNAP SHOT": 1.8, "SNIPE": 4.2, "SONIC WAVE": 1.8,
+                "STOMP": 1.8, "SUNSHINE": 1.8, "SURGE": 1.8, "TIGHT BINDINGS": 1.8, "TSUNAMI": 1.8,
+                "TUSKA'S WRATH": 1.8, "UNLOAD": 5.4, "WILD MAGIC": 1.8, "WRACK": 1.8}
 
 # Define the type of abilities (B = basic, T = threshold, U = ultimate)
-ability_type: Dict[str, str] = {"ANTICIPATION": "B", "ASPHYXIATE": "T", "ASSAULT": "T", "BACKHAND": "B", "BARGE": "B", "BASH": "B",
-                        "BERSERK": "U", "BINDING SHOT": "B", "BLOOD TENDRILS": "T", "BOMBARDMENT": "T", "CHAIN": "B", "CLEAVE": "B", "COMBUST": "B",
-                        "CONCENTRATED BLAST": "B", "CORRUPTION BLAST": "B", "CORRUPTION SHOT": "B", "DAZING SHOT": "B", "DEADSHOT": "U",
-                        "DEATH'S SWIFTNESS": "U", "DEBILITATE": "T", "DECIMATE": "B", "DEEP IMPACT": "T", "DEMORALISE": "B", "DESTROY": "T",
-                        "DEVOTION": "T", "DISMEMBER": "B", "DRAGON BREATH": "B", "ESCAPE": "B", "FLURRY": "T", "FORCEFUL BACKHAND": "T",
-                        "FRAGMENTATION SHOT": "B", "FREEDOM": "B", "FRENZY": "U", "FURY": "B", "GOLDEN TOUCH": "B", "HAVOC": "B", "HORROR": "T", "HURRICANE": "T",
-                        "IMPACT": "B", "INCENDIARY SHOT": "U", "KICK": "B", "MASSACRE": "U", "METAMORPHOSIS": "U", "METEOR STRIKE": "U", "NEEDLE STRIKE": "B",
-                        "OMNIPOWER": "U", "OVERPOWER": "U", "PIERCING SHOT": "B", "PULVERISE": "U", "PUNISH": "B", "QUAKE": "T", "RAPID FIRE": "T", "RICOCHET": "B",
-                        "ROUT": "T", "SACRIFICE": "B", "SALT THE WOUND": "T", "SEVER": "B", "SHADOW TENDRILS": "T", "SHOCK": "S", "SLAUGHTER": "T", "SLICE": "B",
-                        "SMASH": "B", "SMOKE TENDRILS": "T", "SNAP SHOT": "T", "SNIPE": "B", "SONIC WAVE": "B", "STOMP": "T", "SUNSHINE": "U",
-                        "SURGE": "B", "TIGHT BINDINGS": "T", "TSUNAMI": "U","TUSKA'S WRATH": "B", "UNLOAD": "U", "WILD MAGIC": "T", "WRACK": "B"}
+ability_type = {"ANTICIPATION": "B", "ASPHYXIATE": "T", "ASSAULT": "T", "BACKHAND": "B", "BARGE": "B", "BASH": "B",
+                "BERSERK": "U", "BINDING SHOT": "B", "BLOOD TENDRILS": "T", "BOMBARDMENT": "T", "CHAIN": "B",
+                "CLEAVE": "B", "COMBUST": "B", "CONCENTRATED BLAST": "B", "CORRUPTION BLAST": "B",
+                "CORRUPTION SHOT": "B", "DAZING SHOT": "B", "DEADSHOT": "U", "DEATH'S SWIFTNESS": "U",
+                "DEBILITATE": "T", "DECIMATE": "B", "DEEP IMPACT": "T", "DEMORALISE": "B", "DESTROY": "T",
+                "DEVOTION": "T", "DISMEMBER": "B", "DRAGON BREATH": "B", "ESCAPE": "B", "FLURRY": "T",
+                "FORCEFUL BACKHAND": "T", "FRAGMENTATION SHOT": "B", "FREEDOM": "B", "FRENZY": "U", "FURY": "B",
+                "GOLDEN TOUCH": "B", "HAVOC": "B", "HORROR": "T", "HURRICANE": "T", "IMPACT": "B",
+                "INCENDIARY SHOT": "U", "KICK": "B", "MASSACRE": "U", "METAMORPHOSIS": "U", "METEOR STRIKE": "U",
+                "NEEDLE STRIKE": "B", "OMNIPOWER": "U", "OVERPOWER": "U", "PIERCING SHOT": "B", "PULVERISE": "U",
+                "PUNISH": "B", "QUAKE": "T", "RAPID FIRE": "T", "RICOCHET": "B", "ROUT": "T", "SACRIFICE": "B",
+                "SALT THE WOUND": "T", "SEVER": "B", "SHADOW TENDRILS": "T", "SHOCK": "S", "SLAUGHTER": "T",
+                "SLICE": "B", "SMASH": "B", "SMOKE TENDRILS": "T", "SNAP SHOT": "T", "SNIPE": "B", "SONIC WAVE": "B",
+                "STOMP": "T", "SUNSHINE": "U", "SURGE": "B", "TIGHT BINDINGS": "T", "TSUNAMI": "U",
+                "TUSKA'S WRATH": "B", "UNLOAD": "U", "WILD MAGIC": "T", "WRACK": "B"}
 
 # Define a flag to decide if you can use abilities (based on adrenaline)
-ability_ready: Dict[str, bool] = {"ANTICIPATION": True, "ASPHYXIATE": False, "ASSAULT": False, "BACKHAND": True, "BARGE": True, "BASH": True,
-                        "BERSERK": False, "BINDING SHOT": True, "BLOOD TENDRILS": False, "BOMBARDMENT": False, "CHAIN": True, "CLEAVE": True, "COMBUST": True,
-                        "CONCENTRATED BLAST": True, "CORRUPTION BLAST": True, "CORRUPTION SHOT": True, "DAZING SHOT": True, "DEADSHOT": False,
-                        "DEATH'S SWIFTNESS": False, "DEBILITATE": False, "DECIMATE": True, "DEEP IMPACT": False, "DEMORALISE": True, "DESTROY": False,
-                        "DEVOTION": False, "DISMEMBER": True, "DRAGON BREATH": True, "ESCAPE": True, "FLURRY": False, "FORCEFUL BACKHAND": False,
-                        "FRAGMENTATION SHOT": True, "FREEDOM": True, "FRENZY": False, "FURY": True, "GOLDEN TOUCH": True, "HAVOC": True, "HORROR": False, "HURRICANE": False,
-                        "IMPACT": True, "INCENDIARY SHOT": False, "KICK": True, "MASSACRE": False, "METAMORPHOSIS": False, "METEOR STRIKE": False, "NEEDLE STRIKE": True,
-                        "OMNIPOWER": False, "OVERPOWER": False, "PIERCING SHOT": True, "PULVERISE": False, "PUNISH": True, "QUAKE": False, "RAPID FIRE": False, "RICOCHET": True,
-                        "ROUT": False, "SACRIFICE": True, "SALT THE WOUND": False, "SEVER": True, "SHADOW TENDRILS": False, "SHOCK": "S", "SLAUGHTER": False, "SLICE": True,
-                        "SMASH": True, "SMOKE TENDRILS": False, "SNAP SHOT": False, "SNIPE": True, "SONIC WAVE": True, "STOMP": False, "SUNSHINE": False,
-                        "SURGE": True, "TIGHT BINDINGS": False, "TSUNAMI": False,"TUSKA'S WRATH": True, "UNLOAD": False, "WILD MAGIC": False, "WRACK": True}
+ability_ready = {"ANTICIPATION": True, "ASPHYXIATE": False, "ASSAULT": False, "BACKHAND": True, "BARGE": True,
+                 "BASH": True, "BERSERK": False, "BINDING SHOT": True, "BLOOD TENDRILS": False, "BOMBARDMENT": False,
+                 "CHAIN": True, "CLEAVE": True, "COMBUST": True, "CONCENTRATED BLAST": True, "CORRUPTION BLAST": True,
+                 "CORRUPTION SHOT": True, "DAZING SHOT": True, "DEADSHOT": False, "DEATH'S SWIFTNESS": False,
+                 "DEBILITATE": False, "DECIMATE": True, "DEEP IMPACT": False, "DEMORALISE": True, "DESTROY": False,
+                 "DEVOTION": False, "DISMEMBER": True, "DRAGON BREATH": True, "ESCAPE": True, "FLURRY": False,
+                 "FORCEFUL BACKHAND": False, "FRAGMENTATION SHOT": True, "FREEDOM": True, "FRENZY": False, "FURY": True,
+                 "GOLDEN TOUCH": True, "HAVOC": True, "HORROR": False, "HURRICANE": False, "IMPACT": True,
+                 "INCENDIARY SHOT": False, "KICK": True, "MASSACRE": False, "METAMORPHOSIS": False,
+                 "METEOR STRIKE": False, "NEEDLE STRIKE": True, "OMNIPOWER": False, "OVERPOWER": False,
+                 "PIERCING SHOT": True, "PULVERISE": False, "PUNISH": True, "QUAKE": False, "RAPID FIRE": False,
+                 "RICOCHET": True, "ROUT": False, "SACRIFICE": True, "SALT THE WOUND": False, "SEVER": True,
+                 "SHADOW TENDRILS": False, "SHOCK": "S", "SLAUGHTER": False, "SLICE": True, "SMASH": True,
+                 "SMOKE TENDRILS": False, "SNAP SHOT": False, "SNIPE": True, "SONIC WAVE": True, "STOMP": False,
+                 "SUNSHINE": False, "SURGE": True, "TIGHT BINDINGS": False, "TSUNAMI": False, "TUSKA'S WRATH": True,
+                 "UNLOAD": False, "WILD MAGIC": False, "WRACK": True}
 
 # Define the time DOT abilities last (in seconds) 1 DOT application takes 2 ticks or 1.2 seconds
-bleeds: Dict[str, float] = {"BLOOD TENDRILS": 6, "CHAIN": 10.8, "COMBUST": 6, "CORRUPTION BLAST": 6, "CORRUPTION SHOT": 6, "DEADSHOT": 6, "DEATH'S SWIFTNESS": 18,
-                            "DISMEMBER": 6, "FRAGMENTATION SHOT": 6, "INCENDIARY SHOT": 1.2, "MASSACRE": 6, "SLAUGHTER": 6, "SUNSHINE": 19.2}
+bleeds = {"BLOOD TENDRILS": 6, "CHAIN": 10.8, "COMBUST": 6, "CORRUPTION BLAST": 6, "CORRUPTION SHOT": 6, "DEADSHOT": 6,
+          "DEATH'S SWIFTNESS": 18, "DISMEMBER": 6, "FRAGMENTATION SHOT": 6, "INCENDIARY SHOT": 1.2, "MASSACRE": 6,
+          "SLAUGHTER": 6, "SUNSHINE": 19.2}
 
 # Define damage multiplier of walking bleeds
-walking_bleeds: Dict[str, float] = {"ASPHYXIATE": 1,"ASSAULT": 1,"BLOOD TENDRILS": 1,"COMBUST": 2,"CONCENTRATED BLAST": 1,"CORRUPTION BLAST": 1,"CORRUPTION SHOT": 1,
-                                    "DEADSHOT": 1,"DEATH'S SWIFTNESS": 1,"DESTROY": 1,"DISMEMBER": 1,"FLURRY": 1,"FRAGMENTATION SHOT": 2,"FRENZY": 1,
-                                    "FURY": 1,"INCENDIARY SHOT": 1,"MASSACRE": 1,"RAPID FIRE": 1,"SLAUGHTER": 3,"SMOKE TENDRILS": 1,"SNIPE": 1,
-                                    "STOMP": 1,"UNLOAD": 1,"WILD MAGIC": 1}
+walking_bleeds = {"ASPHYXIATE": 1, "ASSAULT": 1, "BLOOD TENDRILS": 1, "COMBUST": 2, "CONCENTRATED BLAST": 1,
+                  "CORRUPTION BLAST": 1, "CORRUPTION SHOT": 1, "DEADSHOT": 1, "DEATH'S SWIFTNESS": 1, "DESTROY": 1,
+                  "DISMEMBER": 1, "FLURRY": 1, "FRAGMENTATION SHOT": 2, "FRENZY": 1, "FURY": 1, "INCENDIARY SHOT": 1,
+                  "MASSACRE": 1, "RAPID FIRE": 1, "SLAUGHTER": 3, "SMOKE TENDRILS": 1, "SNIPE": 1, "STOMP": 1,
+                  "UNLOAD": 1, "WILD MAGIC": 1}
 
 # Define bleed abilities that have their first hit affected by damage modifying abilities
-# NOTE: i think its best to leave these two lists null
-special_bleeds: List[str] = []
+special_bleeds = ["DEADSHOT", "MASSACRE", "SMOKE TENDRILS"]
 
 # Define abilities that take longer than 1.8 seconds to use but will still have full impact from abilities in the
 # crit_boost list
-special_abilities: List[str] = []
+special_abilities = ["SNIPE"]
 
 # How long stuns, DPS increases .. etc last
-buff_time: Dict[str, float] = {"BACKHAND": 2,"BARGE": 11,"BERSERK": 34,"BINDING SHOT": 17,"DEATH'S SWIFTNESS": 50,"DEEP IMPACT": 6,"DEMORALISE": 2,
-                               "DESTROY": 6,"FORCEFUL BACKHAND": 5,"HORROR": 6,"IMPACT": 2,"KICK": 2,"METAMORPHOSIS": 25,"ROUT": 6,
-                               "SHOCK": 2,"STOMP": 6,"SUNSHINE": 50,"TIGHT BINDINGS": 17}
+buff_time = {"BACKHAND": 2, "BARGE": 11, "BERSERK": 34, "BINDING SHOT": 17, "DEATH'S SWIFTNESS": 50, "DEEP IMPACT": 6,
+             "DEMORALISE": 2, "DESTROY": 6, "FORCEFUL BACKHAND": 5, "HORROR": 6, "IMPACT": 2, "KICK": 2,
+             "METAMORPHOSIS": 25, "ROUT": 6, "SHOCK": 2, "STOMP": 6, "SUNSHINE": 50, "TIGHT BINDINGS": 17}
 
 # Define the Multiplier for boosted damage
-buff_effect: Dict[str, float] = {"BERSERK": 2,"DEATH'S SWIFTNESS": 1.5,"METAMORPHOSIS": 1.625,"NEEDLE STRIKE": 1.07,"SUNSHINE": 1.5}
-
+buff_effect = {"BERSERK": 2, "DEATH'S SWIFTNESS": 1.5, "METAMORPHOSIS": 1.625, "NEEDLE STRIKE": 1.07,
+               "PIERCING SHOT": 2, "PUNISH": 2, "SLICE": 1.507, "SUNSHINE": 1.5, "WRACK": 2}
 # Define crit-boosting abilities
-crit_boost: List[str] = ["BERSERK","DEATH'S SWIFTNESS","METAMORPHOSIS", "NEEDLE STRIKE","SUNSHINE"]
+crit_boost = ["BERSERK", "DEATH'S SWIFTNESS", "METAMORPHOSIS", "NEEDLE STRIKE", "SUNSHINE"]
 
 # Define the abilities that do extra damage when the target is stun or bound
-punishing: List[str] = ["PIERCING SHOT", "PUNISH", "SLICE", "WRACK"]
+punishing = ["PIERCING SHOT", "PUNISH", "SLICE", "WRACK"]
 
 # Define abilities that can stun or bind the target
-debilitating: List[str] = ["BACKHAND","BARGE","BINDING SHOT","DEEP IMPACT","DEMORALISE","DESTROY","FORCEFUL BACKHAND",
-                           "HORROR","IMPACT","KICK","ROUT","SHOCK","STOMP","TIGHT BINDINGS"]
+debilitating = ["BACKHAND", "BARGE", "BINDING SHOT", "DEEP IMPACT", "DEMORALISE", "DESTROY", "FORCEFUL BACKHAND",
+                "HORROR", "IMPACT", "KICK", "ROUT", "SHOCK", "STOMP", "TIGHT BINDINGS"]
 
 # Define abilities that bind the target
-binds: List[str] = ["BARGE", "BINDING SHOT", "DEEP IMPACT","ROUT", "TIGHT BINDINGS"]
+binds = ["BARGE", "BINDING SHOT", "DEEP IMPACT", "ROUT", "TIGHT BINDINGS"]
 
 # Define area of effect abilities
-aoe: List[str] = ["BOMBARDMENT", "CHAIN", "CLEAVE", "CORRUPTION BLAST", "CORRUPTION SHOT", "DRAGON BREATH", "FLURRY",
-                  "HURRICANE", "METEOR STRIKE","QUAKE", "RICOCHET", "TSUNAMI"]
+aoe = ["BOMBARDMENT", "CHAIN", "CLEAVE", "CORRUPTION BLAST", "CORRUPTION SHOT", "DRAGON BREATH", "FLURRY", "HURRICANE",
+       "METEOR STRIKE", "QUAKE", "RICOCHET", "TSUNAMI"]
 
 start_adrenaline: int
 gain: int
@@ -221,7 +240,7 @@ def ability_rotation(permutation: List[str]) -> float:
     time_elapsed = round(time_elapsed, 1)
     while time_elapsed < cycle_duration:
         for ability in permutation:
-            # Checks if ability can be used TODO: Check if this is necessary
+            # Checks if ability can be used
             if time_elapsed < cycle_duration and ability_ready[ability] is True:
                 ability_ready[ability] = False
                 # --- Modifying adrenaline as required --- #
@@ -346,7 +365,8 @@ def ability_rotation(permutation: List[str]) -> float:
 
 
 def setup_config() -> None:
-    global start_adrenaline, gain, attack_speed, activate_bleeds, debilitating, my_abilities, auto_adrenaline, cycle_duration
+    global start_adrenaline, gain, attack_speed, activate_bleeds, debilitating, my_abilities, auto_adrenaline,\
+           cycle_duration
 
     def compare(lines) -> bool:
         # configuration followed by line number
