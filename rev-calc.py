@@ -420,7 +420,7 @@ def setup_config() -> None:
             if setting[0].upper() not in ("MAGIC", "RANGED", "MELEE"):
                 error_log.append("First style option must be 'magic', 'ranged' or 'melee' (without quotes).")
             if setting[1] not in ("1", "2"):
-                error_log.append("Second style option must be 1 or 2 (for 1 handed / 2 handed weapon)3")
+                error_log.append("Second style option must be 1 or 2 (for 1 handed / 2 handed weapon or dual wield)")
         else:
             error_log.append("Style must start and end with round brackets (), with each option separated by a single "
                              "comma (,).")
