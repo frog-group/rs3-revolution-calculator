@@ -10,5 +10,15 @@ I am currently working on learning combinatorial optimisation algorithms/informa
 Runs on python3.  
 
 ## Calculated Bars
+Bars are calculated by first getting a number of the highest DPT abilities and then feeding them to the program.  
 Disclaimer: I will add bars as I calculate them but, I will only calculate them as I need them.  
-Melee Dual Wield:
+Melee Dual Wield:  
+
+## Todo:
+* [ ] Learn about combinatorial optimisation.
+* [ ] Learn about combinatorial search algorithms to decide which would be best suited for this purpose.
+* [ ] Learn how to implement them in python.
+* [ ] Make calculator for average DPT with any given input abilities.
+* [ ] Adapt calculator to run permutations on a set of input abilities.
+* [ ] Integrate the combinatorial search algorithm into the permutation runner.
+* [ ] Once all the above is complete, cross my fingers and hope Jagex doesn't add a new mechanic.
