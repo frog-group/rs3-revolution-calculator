@@ -12,7 +12,7 @@ Runs on python3.
 ## Calculated Bars
 Bars are calculated by first getting a number of the highest DPT abilities and then feeding them to the program.  
 Disclaimer: I will add bars as I calculate them but, I will only calculate them as I need them.  
-Melee Dual Wield:  
+Melee Dual Wield: DESTROY, ASSAULT, DECIMATE, DISMEMBER, BARGE, PUNISH, SLICE, FURY, HAVOC, BERSERK  
 
 ## Todo:
 * [ ] Learn about combinatorial optimisation.
